@@ -36,12 +36,10 @@ public class Server {
                     System.out.println("New client connected...");
                     clients.add(client);
                     client.start();
-                    callback.accept("Client #" + count + " added to pool");
-
+                    
                     count++;
                 }
             } catch (Exception e) {
-                callback.accept("Server socket did not launch");
             }
         }
 
@@ -79,17 +77,17 @@ public class Server {
                 System.out.println("Streams not open");
             }
 
-            this.updateClients("New client on server, client #" + this.count);
-
             while (true) {
                 try {
                     String req = (String) in.readObject();
-                    callback.accept("client: " + this.count + " sent: " + req);
-                    this.out.writeObject("Message recieved: " + req);
-                    updateClients("client #" + this.count + " said: " + req);
+                    this.out.writeObject("Hi client #" + this.count);
                 } catch (Exception e) {
                 }
             }
         }
+    }
+
+    public static void main(String[] args) {
+        new Server(null, 5555);
     }
 }
