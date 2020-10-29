@@ -2,7 +2,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Client {
@@ -41,7 +40,7 @@ public class Client {
             String res = (String) in.readObject();
 
             System.out.println("Request: " + req.toString());
-            System.out.println("Response: " + res.toString());
+            System.out.println("Server Response: " + res);
         }
         scanner.close();
         socketClient.close();
