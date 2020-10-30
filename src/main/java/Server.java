@@ -80,6 +80,8 @@ public class Server {
             while (true) {
                 try {
                     String req = (String) in.readObject();
+                    System.out.println("Serving client #" + this.count + "...");
+                    System.out.println("Client #" + this.count + " said: " + req + "\n\n");
                     this.out.writeObject("Hi client #" + this.count);
                 } catch (Exception e) {
                 }

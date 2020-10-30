@@ -40,7 +40,7 @@ public class Client {
             String res = (String) in.readObject();
 
             System.out.println("Request: " + req.toString());
-            System.out.println("Server Response: " + res);
+            System.out.println("Server Response: " + res + "\n");
         }
         scanner.close();
         socketClient.close();
