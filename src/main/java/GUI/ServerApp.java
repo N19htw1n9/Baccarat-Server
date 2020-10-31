@@ -1,5 +1,9 @@
+package GUI;
+
 import java.util.HashMap;
 
+import Server.Client;
+import Server.Server;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;

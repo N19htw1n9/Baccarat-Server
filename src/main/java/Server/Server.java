@@ -1,3 +1,5 @@
+package Server;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -14,6 +16,10 @@ public class Server {
     ArrayList<ClientThread> clients = new ArrayList<ClientThread>();
     ServerThread server;
     private Consumer<Serializable> callback;
+
+    public static void main(String[] args) {
+        new Server(null, 5555);
+    }
 
     public Server(Consumer<Serializable> call, int port) {
         this.callback = call;
@@ -36,7 +42,7 @@ public class Server {
                     System.out.println("New client connected...");
                     clients.add(client);
                     client.start();
-                    
+
                     count++;
                 }
             } catch (Exception e) {
@@ -87,9 +93,5 @@ public class Server {
                 }
             }
         }
-    }
-
-    public static void main(String[] args) {
-        new Server(null, 5555);
     }
 }
