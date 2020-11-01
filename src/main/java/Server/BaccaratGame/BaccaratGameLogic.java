@@ -27,7 +27,6 @@ public class BaccaratGameLogic {
 
     public static boolean evaluateBankerDraw(ArrayList<Card> hand, Card playerCard) {
         int bankerTotal = handTotal(hand);
-
         if (bankerTotal == 0 && playerCard != null)
             return true;
         return false;
