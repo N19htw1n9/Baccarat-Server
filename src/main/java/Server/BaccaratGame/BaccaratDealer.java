@@ -3,8 +3,6 @@ package Server.BaccaratGame;
 import java.util.ArrayList;
 import java.util.Random;
 
-import Server.BaccaratGame.Card;
-
 public class BaccaratDealer {
     public ArrayList<Card> deck;
     private String[] suits;

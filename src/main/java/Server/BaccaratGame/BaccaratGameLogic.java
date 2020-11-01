@@ -1,7 +1,6 @@
 package Server.BaccaratGame;
 
 import java.util.ArrayList;
-import Server.BaccaratGame.Card;
 
 public class BaccaratGameLogic {
     public static String whoWon(ArrayList<Card> hand1, ArrayList<Card> hand2) {

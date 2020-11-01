@@ -1,7 +1,6 @@
 package Server.BaccaratGame;
 
 import java.util.ArrayList;
-import Server.BaccaratGame.Card;
 
 public class BaccaratGame {
     private ArrayList<Card> playerHand;
@@ -9,6 +8,10 @@ public class BaccaratGame {
     private BaccaratDealer theDealer;
     private double currentBet;
     private double totalWinnings;
+
+    public BaccaratGame() {
+        theDealer = new BaccaratDealer();
+    }
 
     public double evaluateWinnings() {
         return 0.0;
