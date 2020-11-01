@@ -56,7 +56,7 @@ public class BaccaratDealer {
     }
 
     public void shuffleDeck() {
-        this.generateRandomDeck(this.deck.size());
+        this.generateRandomDeck(52);
     }
 
     public int deckSize() {
