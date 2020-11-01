@@ -8,6 +8,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.function.Consumer;
+
+import Server.BaccaratGame.BaccaratInfo;
+
 import java.lang.Thread;
 
 public class GameServer {
@@ -85,10 +88,14 @@ public class GameServer {
 
             while (true) {
                 try {
-                    String req = (String) in.readObject();
+                    BaccaratInfo req = (BaccaratInfo) in.readObject();
+
                     System.out.println("Serving client #" + this.count + "...");
-                    System.out.println("Client #" + this.count + " said: " + req + "\n\n");
-                    this.out.writeObject("Hi client #" + this.count);
+                    System.out.println("Client #" + this.count + " sent:");
+                    System.out.printf("\tBid: %d\nHand: %s\n\n", req.bid, req.hand);
+
+                    BaccaratInfo res = req;
+                    out.writeObject(res);
                 } catch (Exception e) {
                 }
             }
