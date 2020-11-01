@@ -45,7 +45,10 @@ public class BaccaratDealer {
     }
 
     public ArrayList<Card> dealHand() {
-        return null;
+        ArrayList<Card> hand = new ArrayList<>();
+        hand.add(this.drawOne());
+        hand.add(this.drawOne());
+        return hand;
     }
 
     public Card drawOne() {
