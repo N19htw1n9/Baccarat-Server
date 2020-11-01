@@ -3,7 +3,7 @@ package GUI;
 import java.util.HashMap;
 
 import Server.Client;
-import Server.Server;
+import Server.GameServer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -28,7 +28,7 @@ public class ServerApp extends Application {
     VBox clientBox;
     Scene startScene;
     BorderPane startPane;
-    Server serverConnection;
+    GameServer serverConnection;
     Client clientConnection;
 
     ListView<String> listItems, listItems2;
@@ -48,7 +48,7 @@ public class ServerApp extends Application {
         this.serverChoice.setOnAction(e -> {
             primaryStage.setScene(sceneMap.get("server"));
             primaryStage.setTitle("This is the Server");
-            serverConnection = new Server(data -> {
+            serverConnection = new GameServer(data -> {
                 Platform.runLater(() -> {
                     listItems.getItems().add(data.toString());
                 });
