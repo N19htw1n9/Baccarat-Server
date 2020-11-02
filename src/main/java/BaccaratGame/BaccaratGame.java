@@ -29,7 +29,11 @@ public class BaccaratGame {
 
     public double evaluateWinnings() {
         String winner = BaccaratGameLogic.whoWon(this.bankerHand, this.playerHand);
+        if (winner.equals(this.hand))
+            return this.currentBet;
+        else if (winner.equals("Tie"))
         return 0.0;
+        return -1 * this.currentBet;
     }
 
     public ArrayList<Card> getPlayerHand() {
