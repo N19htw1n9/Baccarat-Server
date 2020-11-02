@@ -30,9 +30,12 @@ public class BaccaratGame {
 
     public double evaluateWinnings() {
         String winner = BaccaratGameLogic.whoWon(this.bankerHand, this.playerHand);
-        if (winner.equals(this.hand))
+        if (winner.equals(this.hand)) {
+            // Charge 5% commission if banker won
+            if (this.hand.equals("Banker"))
+                return this.currentBet * (1 - 0.05);
             return this.currentBet;
-        else if (winner.equals("Tie"))
+        } else if (winner.equals("Draw"))
             return 0.0;
         return -1 * this.currentBet;
     }
