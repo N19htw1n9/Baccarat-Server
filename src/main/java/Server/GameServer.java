@@ -9,6 +9,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
+import BaccaratGame.BaccaratGame;
+import BaccaratGame.BaccaratGameLogic;
 import BaccaratGame.BaccaratInfo;
 
 import java.lang.Thread;
@@ -93,8 +95,18 @@ public class GameServer {
                     System.out.println("Client #" + this.count + " sent:");
                     System.out.printf("\tBid: %f\tHand: %s\n\n", req.bid, req.hand);
 
-                    // BaccaratInfo res = req;
-                    out.writeObject(req);
+                    BaccaratGame game = new BaccaratGame(req.bid, req.hand);
+
+                    BaccaratInfo res = new BaccaratInfo(req.bid, req.hand);
+                    // Convert card to map with image
+                    // Card -> String: Card.value + Card.suit.subs
+                    // [Card, Card] -> [1D, 12H]
+                    res.bankerHand = game.convertCardToString(game.getBankerHand());
+                    res.playerHand = game.convertCardToString(game.getPlayerHand());
+                    // Set winner
+                    res.winner = BaccaratGameLogic.whoWon(game.getBankerHand(), game.getPlayerHand());
+                    res.winnings = game.evaluateWinnings();
+                    out.writeObject(res);
                 } catch (Exception e) {
                     System.out.println(e);
                     System.out.printf("Something went wrong... Could not fetch request from client #%d\n", this.count);
