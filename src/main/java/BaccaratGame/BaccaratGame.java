@@ -16,6 +16,7 @@ public class BaccaratGame {
         this.playerHand = this.theDealer.dealHand();
         this.bankerHand = this.theDealer.dealHand();
         this.currentBet = currentBet;
+        this.hand = hand;
     }
 
     public ArrayList<String> convertCardToString(ArrayList<Card> cards) {
