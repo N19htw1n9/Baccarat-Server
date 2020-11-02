@@ -3,9 +3,9 @@ package BaccaratGame;
 import java.util.ArrayList;
 
 public class BaccaratGameLogic {
-    public static String whoWon(ArrayList<Card> hand1, ArrayList<Card> hand2) {
-        int bankerBaccaratHand = handTotal(hand1);
-        int playerBaccaratHand = handTotal(hand2);
+    public static String whoWon(ArrayList<Card> bankerHand, ArrayList<Card> playerHand) {
+        int bankerBaccaratHand = handTotal(bankerHand);
+        int playerBaccaratHand = handTotal(playerHand);
 
         int playerDiff = 9 - playerBaccaratHand;
         int bankerDiff = 9 - bankerBaccaratHand;
