@@ -32,7 +32,7 @@ public class BaccaratGame {
         if (winner.equals(this.hand))
             return this.currentBet;
         else if (winner.equals("Tie"))
-        return 0.0;
+            return 0.0;
         return -1 * this.currentBet;
     }
 
@@ -40,48 +40,23 @@ public class BaccaratGame {
         return playerHand;
     }
 
-    public void setPlayerHand(ArrayList<Card> playerHand) {
-        this.playerHand = playerHand;
-    }
-
     public ArrayList<Card> getBankerHand() {
         return bankerHand;
-    }
-
-    public void setBankerHand(ArrayList<Card> bankerHand) {
-        this.bankerHand = bankerHand;
     }
 
     public BaccaratDealer getTheDealer() {
         return theDealer;
     }
 
-    public void setTheDealer(BaccaratDealer theDealer) {
-        this.theDealer = theDealer;
-    }
-
     public double getCurrentBet() {
         return currentBet;
-    }
-
-    public void setCurrentBet(double currentBet) {
-        this.currentBet = currentBet;
     }
 
     public double getTotalWinnings() {
         return totalWinnings;
     }
 
-    public void setTotalWinnings(double totalWinnings) {
-        this.totalWinnings = totalWinnings;
-    }
-
     public String getHand() {
         return hand;
     }
-
-    public void setHand(String hand) {
-        this.hand = hand;
-    }
-
 }
