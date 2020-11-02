@@ -22,10 +22,6 @@ public class GameServer {
     ServerThread server;
     private Consumer<Serializable> callback;
 
-    public static void main(String[] args) {
-        new GameServer(null, 5555);
-    }
-
     public GameServer(Consumer<Serializable> call, int port) {
         this.callback = call;
         this.port = port;
@@ -40,11 +36,13 @@ public class GameServer {
             try {
                 this.socket = new ServerSocket(port);
 
-                System.out.println("Server is waiting for a client!");
+                callback.accept("Server is running on port " + port);
+                callback.accept("Waiting for client to connect...");
 
                 while (true) {
                     ClientThread client = new ClientThread(this.socket.accept(), count);
-                    System.out.println("New client connected...");
+                    callback.accept("New client connected:");
+                    callback.accept("\tClient #" + count);
                     clients.add(client);
                     client.start();
 
@@ -61,13 +59,13 @@ public class GameServer {
 
     class ClientThread extends Thread {
         Socket connection;
-        int count;
+        int id;
         ObjectOutputStream out;
         ObjectInputStream in;
 
-        public ClientThread(Socket connection, int count) {
+        public ClientThread(Socket connection, int id) {
             this.connection = connection;
-            this.count = count;
+            this.id = id;
         }
 
         public void updateClients(String message) {
@@ -85,15 +83,16 @@ public class GameServer {
                 this.in = new ObjectInputStream(this.connection.getInputStream());
                 this.connection.setTcpNoDelay(true);
             } catch (Exception e) {
-                System.out.println("Streams not open");
+                callback.accept("Client #" + id);
+                callback.accept("\tError: Could not open streams");
             }
 
             while (!this.connection.isClosed()) {
                 try {
                     BaccaratInfo req = (BaccaratInfo) in.readObject();
 
-                    System.out.println("Client #" + this.count + " sent:");
-                    System.out.printf("\tBid: %f\tHand: %s\n\n", req.bid, req.hand);
+                    callback.accept("Client #" + this.id + " sent a request: ");
+                    callback.accept("\tBid: " + req.bid + "\tHand: " + req.hand + "\n");
 
                     BaccaratGame game = new BaccaratGame(req.bid, req.hand);
 
@@ -107,17 +106,18 @@ public class GameServer {
                     res.winner = BaccaratGameLogic.whoWon(game.getBankerHand(), game.getPlayerHand());
                     res.winnings = game.evaluateWinnings();
                     out.writeObject(res);
+
+                    callback.accept("\tResponse sent!");
                 } catch (Exception e) {
-                    System.out.println(e);
-                    System.out.printf("Something went wrong... Could not fetch request from client #%d\n", this.count);
+                    callback.accept("Error: Could not fetch request from client #" + this.id);
                     try {
                         this.connection.close();
                     } catch (IOException e1) {
-                        e1.printStackTrace();
+                        callback.accept("Error: Could not close connection for client #" + this.id);
                     }
                 }
             }
-            System.out.println("Connection closed");
+            callback.accept("Connection closed for client #" + this.id);
         }
     }
 }
