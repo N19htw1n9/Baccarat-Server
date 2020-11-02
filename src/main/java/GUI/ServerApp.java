@@ -8,14 +8,14 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class ServerApp extends Application {
-    Button startServerButton;
-    HBox startContent;
+    TextField portField;
     Scene startScene;
     BorderPane startPane;
     GameServer serverConnection;
@@ -32,9 +32,12 @@ public class ServerApp extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Start Baccarat Game Server");
 
-        this.startServerButton = new Button("Start Server");
+        this.portField = new TextField("5555");
+        this.portField.setPromptText("Port number (e.g. 5555)");
 
-        this.startServerButton.setOnAction(e -> {
+        Button startServerButton = new Button("Start Server");
+        startServerButton.setOnAction(e -> {
+            this.port = Integer.parseInt(this.portField.getText());
             primaryStage.setScene(this.createServerGui());
             primaryStage.setTitle("Baccarat Gamer Server");
 
@@ -45,9 +48,10 @@ public class ServerApp extends Application {
             }, this.port);
         });
 
-        this.startContent = new HBox(20, startServerButton);
-        this.startContent.setPadding(new Insets(10));
-        startScene = new Scene(this.startContent, 500, 400);
+        HBox startContent = new HBox(20, this.portField, startServerButton);
+
+        startContent.setPadding(new Insets(10));
+        startScene = new Scene(startContent, 500, 400);
 
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -56,7 +60,6 @@ public class ServerApp extends Application {
                 System.exit(0);
             }
         });
-
         primaryStage.setScene(startScene);
         primaryStage.show();
     }
