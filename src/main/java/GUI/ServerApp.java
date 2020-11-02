@@ -1,7 +1,5 @@
 package GUI;
 
-import java.util.HashMap;
-
 import Server.GameServer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -17,13 +15,12 @@ import javafx.stage.WindowEvent;
 
 public class ServerApp extends Application {
     Button startServerButton;
-    HashMap<String, Scene> sceneMap;
-    HBox buttonBox;
+    HBox startContent;
     Scene startScene;
     BorderPane startPane;
     GameServer serverConnection;
 
-    ListView<String> listItems;
+    ListView<String> listItems = new ListView<String>();
 
     private int port = 5555;
 
@@ -38,7 +35,7 @@ public class ServerApp extends Application {
         this.startServerButton = new Button("Start Server");
 
         this.startServerButton.setOnAction(e -> {
-            primaryStage.setScene(sceneMap.get("server"));
+            primaryStage.setScene(this.createServerGui());
             primaryStage.setTitle("Baccarat Gamer Server");
 
             serverConnection = new GameServer(data -> {
@@ -48,18 +45,9 @@ public class ServerApp extends Application {
             }, this.port);
         });
 
-        this.buttonBox = new HBox(400, startServerButton);
-        startPane = new BorderPane();
-        startPane.setPadding(new Insets(10));
-        startPane.setCenter(buttonBox);
-
-        startScene = new Scene(startPane, 500, 400);
-
-        listItems = new ListView<String>();
-
-        sceneMap = new HashMap<String, Scene>();
-
-        sceneMap.put("server", createServerGui());
+        this.startContent = new HBox(20, startServerButton);
+        this.startContent.setPadding(new Insets(10));
+        startScene = new Scene(this.startContent, 500, 400);
 
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -71,7 +59,6 @@ public class ServerApp extends Application {
 
         primaryStage.setScene(startScene);
         primaryStage.show();
-
     }
 
     public Scene createServerGui() {
