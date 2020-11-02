@@ -62,4 +62,9 @@ public class BaccaratDealer {
     public int deckSize() {
         return this.deck.size();
     }
+
+    public String[] getSuits()
+    {
+        return this.suits;
+    }
 }
