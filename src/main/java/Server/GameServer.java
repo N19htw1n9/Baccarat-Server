@@ -60,8 +60,8 @@ public class GameServer {
     class ClientThread extends Thread {
         Socket connection;
         int count;
-        ObjectInputStream in;
         ObjectOutputStream out;
+        ObjectInputStream in;
 
         public ClientThread(Socket connection, int count) {
             this.connection = connection;
@@ -79,26 +79,33 @@ public class GameServer {
 
         public void run() {
             try {
-                this.in = new ObjectInputStream(this.connection.getInputStream());
                 this.out = new ObjectOutputStream(this.connection.getOutputStream());
+                this.in = new ObjectInputStream(this.connection.getInputStream());
                 this.connection.setTcpNoDelay(true);
             } catch (Exception e) {
                 System.out.println("Streams not open");
             }
 
-            while (true) {
+            while (!this.connection.isClosed()) {
                 try {
                     BaccaratInfo req = (BaccaratInfo) in.readObject();
 
-                    System.out.println("Serving client #" + this.count + "...");
                     System.out.println("Client #" + this.count + " sent:");
                     System.out.printf("\tBid: %d\nHand: %s\n\n", req.bid, req.hand);
 
-                    BaccaratInfo res = req;
-                    out.writeObject(res);
+                    // BaccaratInfo res = req;
+                    out.writeObject(req);
                 } catch (Exception e) {
+                    System.out.println(e);
+                    System.out.printf("Something went wrong... Could not fetch request from client #%d\n", this.count);
+                    try {
+                        this.connection.close();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
                 }
             }
+            System.out.println("Connection closed");
         }
     }
 }
