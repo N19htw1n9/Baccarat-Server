@@ -3,10 +3,10 @@ package BaccaratGame;
 import java.io.Serializable;
 
 public class BaccaratInfo implements Serializable {
-    public int bid;
+    public double bid;
     public String hand;
 
-    public BaccaratInfo(int bid, String hand) {
+    public BaccaratInfo(double bid, String hand) {
         this.bid = bid;
         this.hand = hand;
     }

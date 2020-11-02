@@ -91,7 +91,7 @@ public class GameServer {
                     BaccaratInfo req = (BaccaratInfo) in.readObject();
 
                     System.out.println("Client #" + this.count + " sent:");
-                    System.out.printf("\tBid: %d\nHand: %s\n\n", req.bid, req.hand);
+                    System.out.printf("\tBid: %f\tHand: %s\n\n", req.bid, req.hand);
 
                     // BaccaratInfo res = req;
                     out.writeObject(req);
