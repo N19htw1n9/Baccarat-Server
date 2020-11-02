@@ -1,4 +1,4 @@
-package Server.BaccaratGame;
+package BaccaratGame;
 
 public class Card {
     private String suite;

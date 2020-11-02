@@ -1,4 +1,4 @@
-package Server.BaccaratGame;
+package BaccaratGame;
 
 import java.io.Serializable;
 

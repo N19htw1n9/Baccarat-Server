@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
-import Server.BaccaratGame.BaccaratInfo;
+import BaccaratGame.BaccaratInfo;
 
 import java.lang.Thread;
 
