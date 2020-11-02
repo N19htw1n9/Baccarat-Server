@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class ServerApp extends Application {
-    Button serverChoice;
+    Button startServerButton;
     HashMap<String, Scene> sceneMap;
     HBox buttonBox;
     Scene startScene;
@@ -24,6 +24,8 @@ public class ServerApp extends Application {
     GameServer serverConnection;
 
     ListView<String> listItems;
+
+    private int port = 5555;
 
     public static void main(String[] args) {
         launch(args);
@@ -33,11 +35,9 @@ public class ServerApp extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Start Baccarat Game Server");
 
-        this.serverChoice = new Button("Server");
-        this.serverChoice.setStyle("-fx-pref-width: 300px");
-        this.serverChoice.setStyle("-fx-pref-height: 300px");
+        this.startServerButton = new Button("Start Server");
 
-        this.serverChoice.setOnAction(e -> {
+        this.startServerButton.setOnAction(e -> {
             primaryStage.setScene(sceneMap.get("server"));
             primaryStage.setTitle("Baccarat Gamer Server");
 
@@ -45,15 +45,15 @@ public class ServerApp extends Application {
                 Platform.runLater(() -> {
                     listItems.getItems().add(data.toString());
                 });
-            }, 5555);
+            }, this.port);
         });
 
-        this.buttonBox = new HBox(400, serverChoice);
+        this.buttonBox = new HBox(400, startServerButton);
         startPane = new BorderPane();
-        startPane.setPadding(new Insets(70));
+        startPane.setPadding(new Insets(10));
         startPane.setCenter(buttonBox);
 
-        startScene = new Scene(startPane, 800, 800);
+        startScene = new Scene(startPane, 500, 400);
 
         listItems = new ListView<String>();
 
@@ -76,8 +76,8 @@ public class ServerApp extends Application {
 
     public Scene createServerGui() {
         BorderPane pane = new BorderPane();
-        pane.setPadding(new Insets(70));
+        pane.setPadding(new Insets(10));
         pane.setCenter(listItems);
-        return new Scene(pane, 500, 400);
+        return new Scene(pane, 500, 700);
     }
 }
