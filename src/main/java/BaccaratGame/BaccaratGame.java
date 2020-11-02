@@ -18,6 +18,15 @@ public class BaccaratGame {
         this.currentBet = currentBet;
     }
 
+    public ArrayList<String> convertCardToString(ArrayList<Card> cards) {
+        ArrayList<String> stringCard = new ArrayList<>();
+        Card c1 = cards.get(0);
+        Card c2 = cards.get(1);
+        stringCard.add(c1.getValue() + "" + c1.getSuite().substring(0).toUpperCase());
+        stringCard.add(c2.getValue() + "" + c2.getSuite().substring(0).toUpperCase());
+        return stringCard;
+    }
+
     public double evaluateWinnings() {
         String winner = BaccaratGameLogic.whoWon(this.bankerHand, this.playerHand);
         return 0.0;
