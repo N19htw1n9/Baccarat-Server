@@ -9,9 +9,11 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
+import BaccaratGame.BaccaratDealer;
 import BaccaratGame.BaccaratGame;
 import BaccaratGame.BaccaratGameLogic;
 import BaccaratGame.BaccaratInfo;
+import BaccaratGame.Card;
 
 import java.lang.Thread;
 
@@ -62,19 +64,11 @@ public class GameServer {
         int id;
         ObjectOutputStream out;
         ObjectInputStream in;
+        BaccaratGame game;
 
         public ClientThread(Socket connection, int id) {
             this.connection = connection;
             this.id = id;
-        }
-
-        public void updateClients(String message) {
-            for (ClientThread client : clients) {
-                try {
-                    client.out.writeObject(message);
-                } catch (Exception e) {
-                }
-            }
         }
 
         public void run() {
@@ -94,14 +88,28 @@ public class GameServer {
                     callback.accept("Client #" + this.id + " sent a request: ");
                     callback.accept("\tBid: " + req.bid + "\tHand: " + req.hand + "\n");
 
-                    BaccaratGame game = new BaccaratGame(req.bid, req.hand);
-
+                    game = new BaccaratGame(req.bid, req.hand);
+                    BaccaratDealer dealer = game.getTheDealer();
                     BaccaratInfo res = new BaccaratInfo(req.bid, req.hand);
+
+                    ArrayList<Card> bankerHand = game.getBankerHand();
+                    ArrayList<Card> playerHand = game.getPlayerHand();
+                    // Check if we need to draw an additional card...
+                    if (BaccaratGameLogic.evaluatePlayerDraw(playerHand)) {
+                        Card playerDrawCard = dealer.drawOne();
+
+                        if (BaccaratGameLogic.evaluateBankerDraw(bankerHand, playerDrawCard)) {
+                            Card bankerDrawCard = dealer.drawOne();
+                            bankerDrawCard.setValue(playerDrawCard.getValue());
+                            bankerHand.add(bankerDrawCard);
+                        }
+                        playerHand.add(playerDrawCard);
+                    }
+
                     // Convert card to map with image
-                    // Card -> String: Card.value + Card.suit.subs
-                    // [Card, Card] -> [1D, 12H]
                     res.bankerHand = game.convertCardToString(game.getBankerHand());
                     res.playerHand = game.convertCardToString(game.getPlayerHand());
+
                     // Set winner
                     res.winner = BaccaratGameLogic.whoWon(game.getBankerHand(), game.getPlayerHand());
                     res.winnings = game.evaluateWinnings();

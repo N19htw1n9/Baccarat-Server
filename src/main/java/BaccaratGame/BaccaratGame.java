@@ -19,12 +19,14 @@ public class BaccaratGame {
         this.hand = hand;
     }
 
+    private String getImageFormatName(Card c) {
+        return c.getValue() + "" + c.getSuite().substring(0, 1).toUpperCase();
+    }
+
     public ArrayList<String> convertCardToString(ArrayList<Card> cards) {
         ArrayList<String> stringCard = new ArrayList<>();
-        Card c1 = cards.get(0);
-        Card c2 = cards.get(1);
-        stringCard.add(c1.getValue() + "" + c1.getSuite().substring(0, 1).toUpperCase());
-        stringCard.add(c2.getValue() + "" + c2.getSuite().substring(0, 1).toUpperCase());
+        for (Card c : cards)
+            stringCard.add(this.getImageFormatName(c));
         return stringCard;
     }
 

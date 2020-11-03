@@ -19,7 +19,10 @@ public class BaccaratGameLogic {
     }
 
     public static int handTotal(ArrayList<Card> hand) {
-        int value = hand.get(0).getValue() + hand.get(1).getValue();
+        int value = 0;
+        for (Card c : hand)
+            value += c.getValue();
+
         if (value < 10)
             return value;
         return value % 10;
