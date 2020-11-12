@@ -70,7 +70,6 @@ public class BaccaratTest
         bi = new BaccaratInfo(100, "Banker");
 
         bg = new BaccaratGame(1000, "Player");
-        bg2 = new BaccaratGame(10, "S");
     }
 
     @Test
